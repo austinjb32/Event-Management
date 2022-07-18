@@ -14,6 +14,8 @@ let app = express();
 
 ///////route file declaration//////////
 
+const array=require('./routes/array')
+
 
 
 
@@ -23,7 +25,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json({ limit: '150mb' }));
 
 
-const url="mongodb+srv://austinjb32:"+process.env.MONGO_PASSWORD+"@cluster0.qw08n.mongodb.net/?retryWrites=true&w=majority"
+const url="mongodb+srv://austinjb32:"+process.env.MONGO_PASSWORD+"@cluster0.qw08n.mongodb.net/para?retryWrites=true&w=majority"
 
 mongoose.connect(process.env.MONGOURL || url, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
     // if(data)
@@ -63,7 +65,7 @@ app.use((req, res, next) => {
 
 
 
-///app.use()
+app.use(array)
 
 
 
