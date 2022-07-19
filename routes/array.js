@@ -1,6 +1,7 @@
 const express= require("express");
 const arrayModel = require("../models/arrayModel");
-const stringModel= require('../models/stringModel')
+const stringModel= require('../models/stringModel');
+const studentModel = require("../models/studentModel");
 
 let router = express()
 
@@ -118,4 +119,69 @@ console.log(e)
 //     //     data:"The save is done",
 
 //     //  } )}})})
+
+router.post("/test/student",async(req,res)=>{
+    try{
+        
+    var{AdmissionNumber,Name,Department,Semester,Phone,DateOfBirth}= req.body
+    if(AdmissionNumber==undefined||null||typeof(AdmissionNumber)!="string"){
+        res.status(200).json({
+            status:false,
+            data:"Error Occured at Admission Number"
+        })
+        return;
+    }
+    if(Name==undefined||null||typeof(Name)!="string"){
+        res.status(200).json({
+            status:false,
+            data:"Error Occured at Name"+typeof(Name)
+        })
+        return;
+    }
+    if(Department==undefined||null||typeof(Department)!="string"){
+        res.status(200).json({
+            status:false,
+            data:"Error Occured at Department"+typeof(Department)
+        })
+        return;
+    }
+    if(Semester==undefined||null||typeof(Semester)!="string"){
+        res.status(200).json({
+            status:true,
+            data:"Error Occured at Semester"+typeof(Semester)
+        })
+        return;
+    }
+    if(Phone==undefined||null||typeof(Phone)!="number"){
+        res.status(200).json({
+            status:false,
+            data:"Error Occured at Phone"+typeof(Phone)
+        })
+        return;
+    }
+    if(DateOfBirth==undefined||null||typeof(DateOfBirth)!="string"){
+        res.status(200).json({
+            status:false,
+            data:("Error Occured at Date of Birth"+typeof(DateOfBirth))
+        })
+        return;
+    }
+    var studentData= new studentModel()
+    studentData.admissionNumber=AdmissionNumber;
+    studentData.name=Name;
+    studentData.department=Department;
+    studentData.semester=Semester;
+    studentData.phone=Phone;
+    studentData.dateOfBirth=DateOfBirth;
+    await studentData.save()
+    res.status(200).json({
+        status:true,
+        data:("Data Saved"+AdmissionNumber)
+    })
+    }catch(e){
+        console.log(e);
+    }
+})
+
+
 module.exports= router;
