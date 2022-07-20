@@ -124,42 +124,42 @@ router.post("/test/student",async(req,res)=>{
     try{
         
     var{AdmissionNumber,Name,Department,Semester,Phone,DateOfBirth}= req.body
-    if(AdmissionNumber==undefined||null||typeof(AdmissionNumber)!="string"){
+    if(AdmissionNumber==undefined||null||typeof(AdmissionNumber)!=="string"){
         res.status(200).json({
             status:false,
             data:"Error Occured at Admission Number"
         })
         return;
     }
-    if(Name==undefined||null||typeof(Name)!="string"){
+    if(Name==undefined||null||typeof(Name)!=="string"){
         res.status(200).json({
             status:false,
             data:"Error Occured at Name"+typeof(Name)
         })
         return;
     }
-    if(Department==undefined||null||typeof(Department)!="string"){
+    if(Department==undefined||null||typeof(Department)!=="string"){
         res.status(200).json({
             status:false,
             data:"Error Occured at Department"+typeof(Department)
         })
         return;
     }
-    if(Semester==undefined||null||typeof(Semester)!="string"){
+    if(Semester==undefined||null||typeof(Semester)!=="string"){
         res.status(200).json({
             status:true,
             data:"Error Occured at Semester"+typeof(Semester)
         })
         return;
     }
-    if(Phone==undefined||null||typeof(Phone)!="number"){
+    if(Phone==undefined||null||typeof(Phone)!=="number"){
         res.status(200).json({
             status:false,
             data:"Error Occured at Phone"+typeof(Phone)
         })
         return;
     }
-    if(DateOfBirth==undefined||null||typeof(DateOfBirth)!="string"){
+    if(DateOfBirth==undefined||null||typeof(DateOfBirth)!=="string"){
         res.status(200).json({
             status:false,
             data:("Error Occured at Date of Birth"+typeof(DateOfBirth))
@@ -182,6 +182,36 @@ router.post("/test/student",async(req,res)=>{
         console.log(e);
     }
 })
+
+router.get('/get/data', async(req,res)=>{
+    try{
+        var data=await studentModel.findOne({_id:"62d7ea4ee5217c1ce18fd42f"})
+        if (data!==null||undefined){
+            console.log(data)
+            console.log(data.phone)
+            data.phone=4516514115
+            await data.save();
+            console.log(data);
+            res.status(200).json({
+                status:"true",
+                output:data
+            })
+        }else{
+            res.status(200).json({
+                status:"false",
+                output:data
+            })
+            return;
+        }
+       
+        res.status(200).json({
+            status:"true",
+            output: data
+        })}catch(e){
+            console.log(e)
+        }
+        return;
+    });
 
 
 module.exports= router;
